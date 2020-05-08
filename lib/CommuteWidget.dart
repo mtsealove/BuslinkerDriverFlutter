@@ -21,18 +21,24 @@ class _CommuteWidgetState extends State<CommuteWidget> {
 
   _CommuteWidgetState(this.id, this.name);
 
-  void moveToQr(bool start) {
+  void moveToQr(bool start, bool able) {
     String title = '';
     if (start) {
       title = '출근';
     } else {
       title = '퇴근';
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QrWidget(title, id)),
-    );
+    if (able) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QrWidget(title, id)),
+      );
+    }
   }
+
+  Color startColor = Color.fromRGBO(0, 31, 70, 1),
+      endColor = Color.fromRGBO(0, 31, 70, 1);
+  bool startAble = false, endAble = false;
 
   void getCommute() async {
     http.Response res = await http.get(
@@ -43,7 +49,17 @@ class _CommuteWidgetState extends State<CommuteWidget> {
     print(rs);
     bool commute = rs['Result'];
     setState(() {
-
+      if (commute) {
+        startColor = Color.fromRGBO(196, 196, 196, 1);
+        endColor = Color.fromRGBO(0, 31, 70, 1);
+        endAble = true;
+        startAble = false;
+      } else {
+        endColor = Color.fromRGBO(196, 196, 196, 1);
+        startColor = Color.fromRGBO(0, 31, 70, 1);
+        endAble = false;
+        startAble = true;
+      }
     });
   }
 
@@ -92,7 +108,7 @@ class _CommuteWidgetState extends State<CommuteWidget> {
                 children: <Widget>[
                   RaisedButton(
                     onPressed: () {
-                      moveToQr(true);
+                      moveToQr(true, startAble);
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -100,8 +116,8 @@ class _CommuteWidgetState extends State<CommuteWidget> {
                     padding: const EdgeInsets.all(0.0),
                     child: Container(
                       width: double.maxFinite,
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(0, 31, 70, 1),
+                      decoration: BoxDecoration(
+                          color: startColor,
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
                       child: Column(
@@ -127,7 +143,7 @@ class _CommuteWidgetState extends State<CommuteWidget> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      moveToQr(false);
+                      moveToQr(false, endAble);
                     },
                     padding: const EdgeInsets.all(0.0),
                     shape: RoundedRectangleBorder(
@@ -135,8 +151,8 @@ class _CommuteWidgetState extends State<CommuteWidget> {
                     ),
                     child: Container(
                       width: double.maxFinite,
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(0, 31, 70, 1),
+                      decoration: BoxDecoration(
+                          color: endColor,
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
                       child: Column(

@@ -4,8 +4,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:buslinkerpt/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class Login extends StatefulWidget {
   @override
@@ -13,6 +18,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+  String token;
+
   var alignment = Alignment.center;
   double op = 0;
   FocusNode node1;
@@ -24,6 +31,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     super.initState();
     node1 = FocusNode();
     animate();
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarBrightness: Brightness.light));
+
+    _firebaseMessaging.getToken().then((token) {
+      print('token:' + token);
+      this.token = token;
+    });
   }
 
   void animate() {
@@ -52,14 +66,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     http.Response res = await http.post(
         Uri.encodeFull('http://3.17.182.55:3300/Login'),
         headers: {'Content-Type': "application/json"},
-        body: jsonEncode({'ID': id, 'Password': pw, 'Cat': 6, 'Token': ''}));
+        body: jsonEncode({'ID': id, 'Password': pw, 'Cat': 6, 'Token': token}));
     var account = jsonDecode(res.body);
     print(account);
     String name = account["Name"];
-    String profile=account['ProfilePath'];
+    String profile = account['ProfilePath'];
     print(name);
     if (name != null) {
-      SharedPreferences pref=await SharedPreferences.getInstance();
+      SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('name', name);
       pref.setString('id', id);
       pref.setString('profile', profile);
@@ -126,16 +140,15 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         children: <Widget>[
                           Text('Bus',
                               style: TextStyle(
-                                fontSize: 30, fontFamily: 'eurostile',
-                                color: Color.fromRGBO(0, 31, 70, 1)
-                              )),
+                                  fontSize: 30,
+                                  fontFamily: 'eurostile',
+                                  color: Color.fromRGBO(0, 31, 70, 1))),
                           Text('Linker',
                               style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: 'eurostile',
-                                fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(0, 31, 70, 1)
-                              )),
+                                  fontSize: 30,
+                                  fontFamily: 'eurostile',
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(0, 31, 70, 1))),
                         ],
                       )
                     ],

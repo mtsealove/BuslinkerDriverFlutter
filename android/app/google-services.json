@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "919815959134",
+    "firebase_url": "https://buslinker-driver-flutter.firebaseio.com",
+    "project_id": "buslinker-driver-flutter",
+    "storage_bucket": "buslinker-driver-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919815959134:android:472afa53e656946cf87acf",
+        "android_client_info": {
+          "package_name": "com.github.mtealove.buslinker_driver_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919815959134-c7ri56q89dt9cc86oo0185l7nc14s8c9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBteJMQiks2LWBha8QvdEieUzyQjmeCZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919815959134-c7ri56q89dt9cc86oo0185l7nc14s8c9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

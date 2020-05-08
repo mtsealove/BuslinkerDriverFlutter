@@ -26,9 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     tabController = TabController(vsync: this, length: 3);
-    tabController.addListener(() {
-
-    });
+    tabController.addListener(() {});
     getProfile();
   }
 
@@ -54,36 +52,56 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         child: Scaffold(
           backgroundColor: Color.fromRGBO(245, 245, 245, 1),
           bottomNavigationBar: Material(
-            color: Colors.white,
-            child: TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: Color.fromRGBO(0, 31, 70, 1),
-              controller: tabController,
-              tabs: <Widget>[
-                Tab(
-                  icon: Image.asset(
-                    'images/tab_commute.png',
-                    height: 30,
-                    width: 30,
+              child: Container(
+            color: Color.fromRGBO(245, 245, 245, 1),
+            height: 70,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.white,
+                    height: 60,
                   ),
                 ),
-                Tab(
-                  icon: Image.asset(
-                    'images/logo.png',
-                    height: 70,
-                    width: 70,
-                  ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TabBar(
+                      indicatorSize: TabBarIndicatorSize.label,
+                      indicatorColor: Colors.transparent,
+                      controller: tabController,
+                      tabs: <Widget>[
+                        Tab(
+                          icon: Image.asset(
+                            'images/tab_commute.png',
+                            height: 30,
+                            width: 30,
+                          ),
+
+                        ),
+                         Image.asset(
+                            'images/tab_logo.png',
+                            height: 70,
+                            width: 70,
+                          ),
+
+                        Tab(
+                          icon: Image.asset(
+                            'images/tab_item.png',
+                            height: 30,
+                            width: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ),
-                Tab(
-                  icon: Image.asset(
-                    'images/tab_item.png',
-                    height: 30,
-                    width: 30,
-                  ),
-                )
+
               ],
             ),
-          ),
+          )),
           body: TabBarView(
             controller: tabController,
             children: <Widget>[

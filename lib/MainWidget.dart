@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:buslinkerpt/AskWidget.dart';
 import 'package:buslinkerpt/ScheduleWidget.dart';
 import 'package:buslinkerpt/TitleWidget.dart';
+import 'package:buslinkerpt/ToturialWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -233,7 +234,11 @@ class _MainWidgetState extends State<MainWidget> {
                             flex: 15,
                             child: RaisedButton(
                               color: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) =>
+                                        TutorialWidget()));
+                              },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(20))),
